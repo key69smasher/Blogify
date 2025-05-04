@@ -20,5 +20,3 @@ Thumbs.db
 .idea/
 *.iml
 
-# Services containing sensitive data
-services/auth.js
