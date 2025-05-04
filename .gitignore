@@ -19,3 +19,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.iml
+
+# Services containing sensitive data
+services/auth.js
