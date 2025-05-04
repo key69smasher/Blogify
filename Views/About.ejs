@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./particles/meta') %>
+    <%- include('./particles/fonts') %>
+    <title>About Us - Bloggify</title>
+</head>
+
+<body class="bg-dark text-white">
+    <%- include('./particles/navbar') %>
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Welcome to Bloggify</h1>
+            <p class="lead">Your one-stop platform to share ideas, inspire others, and explore the world of blogging.</p>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <!-- Adjusted image size -->
+                <img src="image/about-us.jpg" alt="About Us" class="img-fluid rounded shadow" style="max-height: 600px; object-fit: cover;">
+            </div>
+            <div class="col-md-6">
+                <h2 class="fw-bold">Our Mission</h2>
+                <p>
+                    At Bloggify, we believe in the power of words and ideas. Our mission is to provide a platform where bloggers, writers, and creators can express themselves freely, connect with like-minded individuals, and inspire the world with their stories.
+                </p>
+                <h2 class="fw-bold mt-4">Why Choose Bloggify?</h2>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill text-primary"></i> Easy-to-use platform for creating and sharing blogs.</li>
+                    <li><i class="bi bi-check-circle-fill text-primary"></i> Connect with a vibrant community of readers and writers.</li>
+                    <li><i class="bi bi-check-circle-fill text-primary"></i> Explore diverse topics and gain new perspectives.</li>
+                </ul>
+            </div>
+        </div>
+        <% if (!locals.user) { %>
+            <div class="text-center mt-5 mb-3">
+                <h2 class="fw-bold">Join Us Today!</h2>
+                <p>Start your blogging journey with Bloggify and make your voice heard.</p>
+                <a href="/user/signup" class="btn btn-primary btn-lg">Create an Account</a>
+            </div>
+        <% } %>
+    </div>
+    <%- include('./particles/script') %>
+</body>
+
+</html>
