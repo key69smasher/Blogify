@@ -29,6 +29,7 @@ router.post("/addnew",upload.single("coverImg"),async (req,res)=>{
         Title,
         body,
         CreatedBy: req.user._id,
+        like: []
     };
     if (req.file) {
         blogData.coverImageUrl = `/uploads/${req.file.filename}`;

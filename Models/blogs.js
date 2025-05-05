@@ -20,7 +20,7 @@ const blogSchema= mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "user", 
-            unique: true, 
+            default: [],
         },
     ],
 },{timestamps:true});
