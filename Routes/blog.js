@@ -9,6 +9,10 @@ const comment=require('../Models/comment');
 
 const storage=multer.diskStorage({
     destination:function(req,res,cb){
+        const uploadPath = path.resolve("./public/uploads");
+        if (!fs.existsSync(uploadPath)) {
+            fs.mkdirSync(uploadPath, { recursive: true });
+        }
         return cb(null ,path.resolve("./public/uploads"));
     },
     filename:function(req,file,cb){
