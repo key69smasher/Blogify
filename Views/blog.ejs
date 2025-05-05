@@ -12,9 +12,15 @@
     <div class="container mt-3">
         <h2><%= Blog.Title %></h2>
         <% if (Blog.coverImageUrl) { %>
-            <img class="image" src="<%= Blog.coverImageUrl %>" alt="Article Img" width="700px">
+            <img class="blog-image" src="<%= Blog.coverImageUrl %>" alt="Article Img">
         <% } %>
-        <pre class="mt-2"><%= Blog.body %></pre>
+        <div class="blog-body" id="blogBody">
+            <%= Blog.body %>
+        </div>
+        <% if (Blog.body.length > 300) { %>
+            <button class="read-more-btn" id="readMoreBtn">Read More</button>
+            <button class="read-less-btn" id="readLessBtn" style="display: none;">Read Less</button>
+        <% } %>
     </div>
     
     <h2 class="container mt-3">Blog Written By:-</h2>
@@ -76,64 +82,80 @@
             <% }) %>
         </div>
     </div>
-    <% if (locals.user) { %>
-        <script>
-            const likeForm = document.querySelector('.like-form');
-            const likeButton = likeForm.querySelector('.like-btn');
-            const heartIcon = likeButton.querySelector('.heart-icon');
-            const likeCount = likeButton.querySelector('.like-count');
-
-            likeButton.addEventListener('click', async (event) => {
-                event.preventDefault(); // Prevent default form submission
-
-                // Get the current state
-                const isLiked = likeButton.getAttribute('data-liked') === 'true';
-                const blogId = '<%= Blog._id %>';
-                const userId = '<%= user._id %>';
-
-                // Toggle the heart icon and like count immediately
+    <script>
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const readLessBtn = document.getElementById('readLessBtn');
+        const blogBody = document.getElementById('blogBody');
+    
+        if (readMoreBtn && readLessBtn) {
+            readMoreBtn.addEventListener('click', () => {
+                blogBody.style.maxHeight = 'none'; // Remove height restriction
+                readMoreBtn.style.display = 'none'; // Hide "Read More" button
+                readLessBtn.style.display = 'block'; // Show "Read Less" button
+            });
+    
+            readLessBtn.addEventListener('click', () => {
+                blogBody.style.maxHeight = '300px'; // Restrict height again
+                readLessBtn.style.display = 'none'; // Hide "Read Less" button
+                readMoreBtn.style.display = 'block'; // Show "Read More" button
+            });
+        }
+    
+        <% if (locals.user) { %>
+        const likeForm = document.querySelector('.like-form');
+        const likeButton = likeForm.querySelector('.like-btn');
+        const heartIcon = likeButton.querySelector('.heart-icon');
+        const likeCount = likeButton.querySelector('.like-count');
+    
+        likeButton.addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Get the current state
+            const isLiked = likeButton.getAttribute('data-liked') === 'true';
+            const blogId = '<%= Blog._id %>';
+            const userId = '<%= user._id %>';
+    
+            // Toggle the heart icon and like count immediately
+            if (isLiked) {
+                heartIcon.setAttribute('fill', 'white');
+                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                likeButton.setAttribute('data-liked', 'false');
+            } else {
+                heartIcon.setAttribute('fill', 'red');
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                likeButton.setAttribute('data-liked', 'true');
+            }
+    
+            // Send the like/unlike request to the server
+            try {
+                const response = await fetch(`/blog/like/${blogId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userId }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to update like status');
+                }
+            } catch (error) {
+                console.error('Error updating like:', error);
+    
+                // Revert the changes if the request fails
                 if (isLiked) {
-                    console.log("Aleady Liked");
-                    heartIcon.setAttribute('fill', 'white');
-                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
-                    likeButton.setAttribute('data-liked', 'false');
-                } else {
-                    console.log("freshly liked");
                     heartIcon.setAttribute('fill', 'red');
                     likeCount.textContent = parseInt(likeCount.textContent) + 1;
                     likeButton.setAttribute('data-liked', 'true');
+                } else {
+                    heartIcon.setAttribute('fill', 'white');
+                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                    likeButton.setAttribute('data-liked', 'false');
                 }
-
-                // Send the like/unlike request to the server
-                try {
-                    const response = await fetch(`/blog/like/${blogId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ userId }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to update like status');
-                    }
-                } catch (error) {
-                    console.error('Error updating like:', error);
-
-                    // Revert the changes if the request fails
-                    if (isLiked) {
-                        heartIcon.setAttribute('fill', 'red');
-                        likeCount.textContent = parseInt(likeCount.textContent) + 1;
-                        likeButton.setAttribute('data-liked', 'true');
-                    } else {
-                        heartIcon.setAttribute('fill', 'white');
-                        likeCount.textContent = parseInt(likeCount.textContent) - 1;
-                        likeButton.setAttribute('data-liked', 'false');
-                    }
-                }
-            });
-        </script>
-    <% } %>
+            }
+        });
+        <% } %>
+    </script>
     <%- include('./particles/script') %>
 </body>
 
