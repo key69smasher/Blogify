@@ -86,6 +86,7 @@ router.delete('/delete/:id', async (req, res) => {
     const blogId = req.params.id;
 
     try {
+        const Blog = await blog.findById(blogId);
         if (Blog.coverImageUrl) {
             const imagePath = path.resolve(`./public${Blog.coverImageUrl}`);
             if (fs.existsSync(imagePath)) {
