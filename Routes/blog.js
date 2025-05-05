@@ -2,6 +2,7 @@ const express=require("express");
 const router=express.Router();
 const multer=require('multer');
 const path=require('path');
+const fs = require('fs');
 
 const blog=require('../Models/blogs');
 const comment=require('../Models/comment');
@@ -85,7 +86,14 @@ router.delete('/delete/:id', async (req, res) => {
     const blogId = req.params.id;
 
     try {
+        if (Blog.coverImageUrl) {
+            const imagePath = path.resolve(`./public${Blog.coverImageUrl}`);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
         await blog.findByIdAndDelete(blogId);
+
         res.status(200).json({ success: true });
     } catch (error) {
         console.error('Error deleting blog:', error);
