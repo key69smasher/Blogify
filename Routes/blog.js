@@ -3,23 +3,41 @@ const router=express.Router();
 const multer=require('multer');
 const path=require('path');
 const fs = require('fs');
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const blog=require('../Models/blogs');
 const comment=require('../Models/comment');
 
-const storage=multer.diskStorage({
-    destination:function(req,res,cb){
-        const uploadPath = path.resolve("./public/uploads");
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true });
-        }
-        return cb(null ,path.resolve("./public/uploads"));
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "blog_images", 
+        allowed_formats: ["jpg", "jpeg", "png"],
     },
-    filename:function(req,file,cb){
-        return cb(null,`${Date.now()}-${file.originalname}`);
-    }
-})
-const upload=multer({storage:storage});
+});
+const upload = multer({ storage: storage });
+
+// For use in the local host with the desired disk storage.
+
+// const storage=multer.diskStorage({
+//     destination:function(req,res,cb){
+//         const uploadPath = path.resolve("./public/uploads");
+//         if (!fs.existsSync(uploadPath)) {
+//             fs.mkdirSync(uploadPath, { recursive: true });
+//         }
+//         return cb(null ,path.resolve("./public/uploads"));
+//     },
+//     filename:function(req,file,cb){
+//         return cb(null,`${Date.now()}-${file.originalname}`);
+//     }
+// })
+// const upload=multer({storage:storage});
 
 router.get("/addnew",(req,res)=>{
     return res.render("addblog",{
@@ -37,7 +55,8 @@ router.post("/addnew",upload.single("coverImg"),async (req,res)=>{
         like: []
     };
     if (req.file) {
-        blogData.coverImageUrl = `/uploads/${req.file.filename}`;
+        // blogData.coverImageUrl = `/uploads/${req.file.filename}`;
+        blogData.coverImageUrl = req.file.path;
     }
 
     const Blog = await blog.create(blogData);
