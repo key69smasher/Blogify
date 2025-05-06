@@ -1,8 +1,9 @@
 const express=require("express");
 const router=express.Router();
 const multer=require('multer');
-const path=require('path');
-const fs = require('fs');
+// const path=require('path');
+// const fs = require('fs');
+const { v2: cloudinary } = require("cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const blog=require('../Models/blogs');
@@ -111,12 +112,11 @@ router.delete('/delete/:id', async (req, res) => {
     try {
         const Blog = await blog.findById(blogId);
         if (Blog.coverImageUrl) {
-            const imagePath = path.resolve(`./public${Blog.coverImageUrl}`);
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
+            const publicId = Blog.coverImageUrl.split('/').pop().split('.')[0]; 
+            await cloudinary.uploader.destroy(`blog_images/${publicId}`); 
         }
         await blog.findByIdAndDelete(blogId);
+        await comment.deleteMany({ blogid: blogId });
 
         res.status(200).json({ success: true });
     } catch (error) {

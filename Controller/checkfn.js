@@ -15,6 +15,11 @@ async function checksignin(req,res){
 
 async function checksignup(req,res){
     const { email, password, fullname } = req.body;
+    if(await User.findOne({email})){
+        res.render("signup",{
+            error:"User with this email already exist !!",
+        });
+    }
     try {
         await User.create({
             fullname,
