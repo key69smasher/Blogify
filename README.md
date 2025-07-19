@@ -1,5 +1,7 @@
 # Blogging Platform
 
+🚀 **[Click here to visit the live Blogify Website](https://blogify-enw1.onrender.com/)**
+
 A feature-rich blogging platform built with **Node.js**, **Express**, and **MongoDB**. This platform allows users to create, edit, and delete blogs, view blogs by other users, and manage their own blogs. It also includes user authentication and a responsive design.
 
 ---
