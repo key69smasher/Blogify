@@ -11,9 +11,7 @@
     <%- include('./particles/navbar') %>
     <div class="container mt-3">
         <h2><%= Blog.Title %></h2>
-        <% if (Blog.coverImageUrl) { %>
-            <img class="blog-image" src="<%= Blog.coverImageUrl %>" alt="Article Img">
-        <% } %>
+        <img class="blog-image" src="<%= Blog.coverImageUrl ? Blog.coverImageUrl : '/image/default_back.jpg' %>"  alt="Article Img">
         <div class="blog-body" id="blogBody">
             <%= Blog.body %>
         </div>

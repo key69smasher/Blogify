@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: "blog_images", 
-        allowed_formats: ["jpg", "jpeg", "png"],
+        allowed_formats: ["jpg", "jpeg", "png","avif"],
     },
 });
 const upload = multer({ storage: storage });
@@ -46,23 +46,28 @@ router.get("/addnew",(req,res)=>{
     })
 })
 
-router.post("/addnew",upload.single("coverImg"),async (req,res)=>{
-    if(req.user===null)res.redirect('/user/signin');
-    const {Title,body}=req.body;
-    const blogData = {
-        Title,
-        body,
-        CreatedBy: req.user._id,
-        like: []
-    };
-    if (req.file) {
-        // blogData.coverImageUrl = `/uploads/${req.file.filename}`;
-        blogData.coverImageUrl = req.file.path;
-    }
+router.post("/addnew", upload.single("coverImg"), async (req, res) => {
+    try {
+        if (!req.user) return res.redirect('/user/signin');
 
-    const Blog = await blog.create(blogData);
-    res.redirect(`/blog/${Blog._id}`);
-})
+        const { Title, body } = req.body;
+        const blogData = {
+            Title,
+            body,
+            CreatedBy: req.user._id,
+            like: []
+        };
+
+        if (req.file) {
+            blogData.coverImageUrl = req.file.path;
+        }
+        const Blog = await blog.create(blogData);
+        res.redirect(`/blog/${Blog._id}`);
+    } catch (err) {
+        console.error("Error creating blog:", err); 
+    }
+});
+
 
 router.get('/:id',async(req,res)=>{
     const blogid=req.params.id;
