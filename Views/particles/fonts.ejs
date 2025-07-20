@@ -44,9 +44,9 @@
     }
 
     .like-btn:hover, .like-bt:hover {
-        background-color: white; /* White background on hover */
-        color: #0d6efd; /* Primary color text on hover */
-        transform: scale(1.1); /* Slight zoom effect */
+        background-color: white;
+        color: black; 
+        transform: scale(1.1); 
     }
 
     .like-btn svg .like-bt svg{
@@ -63,14 +63,14 @@
     .cover-image-container {
     position: relative;
     overflow: hidden;
-    width: 100%; /* Ensure the container takes the full width of the card */
-    height: 200px; /* Set a fixed height for the container */
+    width: 100%;
+    height: 200px;
     }
 
     .cover-image-container img {
-        width: 100%; /* Make the image take the full width of the container */
-        height: 100%; /* Make the image take the full height of the container */
-        object-fit: cover; /* Ensure the image scales properly without distortion */
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
         transition: opacity 0.3s ease-in-out;
         display: block;
     }
@@ -102,69 +102,54 @@
     }
 
     .form-container {
-        max-width: 600px;
+        max-width: 500px;
         margin: 50px auto;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2.5rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(15px);
     }
 
     .form-container h1 {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: center;
-        color: #343a40;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      color: #000000;
+      text-align: center;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
     }
+
 
     .form-container label {
-        font-weight: bold;
-        color: #495057;
+        font-weight: 600;
+        color: #000000  ;
     }
 
-    .form-container button {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-    }
-    .form-container .form-text {
-        font-size: 0.9rem;
-        color: #6c757d;
+  
+
+    .floating-navbar {
+        width: 70%;
+        margin: 40px auto; 
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.9); /* semi-transparent white */
+        backdrop-filter: blur(10px); /* glassmorphism effect */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 2px solid rgba(85, 84, 84, 0.311);
     }
 
-    .blog-image {
-        max-width: 100%; 
-        height: auto;
-        display: block;
-        margin: 0 auto; 
-        max-height: 400px;
-        object-fit: cover;
+
+    .floating-navbar .nav-link {
+    font-weight: 500;
+    font-size: large;
+    color: #333;
     }
 
-    /* Blog body styling */
-    .blog-body {
-        white-space: pre-wrap; /* Preserve line breaks */
-        word-wrap: break-word; /* Prevent horizontal scrolling */
-        overflow: hidden;
-        max-height: 300px; /* Limit height for preview */
-        text-overflow: ellipsis;
+    .floating-navbar .nav-link:hover {
+    color: #007bff;
+    }
+    .navbar {
+        z-index: 1055; /* higher than container */
+        position: relative;
     }
 
-    /* Read more button styling */
-    .read-more-btn, .read-less-btn {
-        display: block;
-        margin: 10px auto;
-        text-align: center;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .read-more-btn:hover, .read-less-btn:hover {
-        background-color: #0056b3;
-    }
 </style>

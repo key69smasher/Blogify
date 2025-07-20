@@ -1,52 +1,48 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">Blogify</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li>
-            <a class="nav-link active" aria-current="page" href="/About_us">About Us</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <% if (locals.user) { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/blog/addnew">Add Blogs</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <%= locals.user.fullname %>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end ">
-                <li><a class="dropdown-item" href="/MyBlogs">My Blogs</a></li>
-                <li><a class="dropdown-item" href="/logout">logout</a></li>
-              </ul>
-            </li>
-          <%} else { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/user/signup">Create Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/user/signin">Log In</a>
-            </li>
-          <% } %>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg floating-navbar shadow">
+  <div class="container-fluid justify-content-between">
+    <!-- Left: Logo -->
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+      <img src="/image/Screenshot (63).png" alt="Logo" width="30" height="30">
+      Blogify
+    </a>
+
+    <!-- Center: Nav links -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/About_us">About Us</a>
+        </li>
+        <% if (locals.user) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/blog/addnew">Add Blog</a>
+        </li>
+        <% } %>
+      </ul>
     </div>
-  </nav>
 
-  <div>
-    <% if (locals.error) { %>
-      <div class="container mt-2">
-        <div class="alert alert-danger" role="alert">
-          <%- locals.error %>
-        </div>
-      </div>
-    <% } %>
-
+    <!-- Right: Auth/Profile -->
+    <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+      <% if (locals.user) { %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          👤 <%= locals.user.fullname %>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="/MyBlogs">📚 My Blogs</a></li>
+          <li><a class="dropdown-item" href="/logout">🚪 Logout</a></li>
+        </ul>
+      </li>
+      <% } else { %>
+      <li class="nav-item">
+        <a class="nav-link btn  me-2" href="/user/signup">Create Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link btn " href="/user/signin">Log In</a>
+      </li>
+      <% } %>
+    </ul>
   </div>
+</nav>

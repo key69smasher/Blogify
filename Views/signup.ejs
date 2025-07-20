@@ -1,32 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('./particles/meta')%>
-    <%- include('./particles/fonts') %>
-    <title>Sign up</title>
+  <%- include('./particles/meta') %>
+  <%- include('./particles/fonts') %>
+  <title>Sign Up - Blogify</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: gray;
+    }
+
+    
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
+      -webkit-text-fill-color: gray !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .form-text {
+      color: gray;
+      font-size: 0.85rem;
+    }
+
+    button.signup {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      background-color: #000000;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      transition: background-color 0.3s ease;
+    }
+
+    button.signup:hover {
+      background-color: #222222;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+    }
+  </style>
 </head>
+
 <body>
   <%- include('./particles/navbar') %>
+
   <div class="form-container">
-      <h1>Sign Up</h1>
-      <form method="post" action="/user/signup">
-          <div class="form-group mb-4">
-              <label for="fullname">Full Name</label>
-              <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Enter your full name">
-              <small id="fullnameHelp" class="form-text">Please enter your full name.</small>
-          </div>
-          <div class="form-group mb-4">
-              <label for="email">Email Address</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email">
-              <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
-          </div>
-          <div class="form-group mb-4">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
-          </div>
-          <button type="submit" class="btn btn-primary">Sign Up</button>
-      </form>
+    <h1>Sign Up</h1>
+    <form method="post" action="/user/signup">
+      <div class="form-group mb-4">
+        <label for="fullname">Full Name</label>
+        <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Enter your full name" required>
+        <small id="fullnameHelp" class="form-text">Please enter your full name.</small>
+      </div>
+      <div class="form-group mb-4">
+        <label for="email">Email Address</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+        <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group mb-4">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="btn signup ">Sign Up</button>
+    </form>
   </div>
+  <%- include('./particles/footer') %>
   <%- include('./particles/script') %>
 </body>
+
 </html>
